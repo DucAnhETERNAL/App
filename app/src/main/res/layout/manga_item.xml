@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Title of the manga -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Manga Title"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- Genre name of the manga -->
+    <TextView
+        android:id="@+id/genreName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Genre"
+        android:textSize="14sp"
+        android:textColor="#555" />
+
+    <!-- Average rating of the manga -->
+    <TextView
+        android:id="@+id/averageRating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rating: 0.0"
+        android:textSize="12sp"
+        android:textColor="#888" />
+
+</LinearLayout>

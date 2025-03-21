@@ -1,26 +1,15 @@
 package com.example.readinglmao.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class MangaDTO {
-    private int id;
+public class MangaDetailsDTO implements Serializable {
     private String title;
     private String description;
     private String author;
     private String type;
     private String status;
-    private List<Chapter> chapters;  // Assuming 'Chapter' is a class representing manga chapters
-    private String genreName;
-    private float averageRating;
-
-    // Getters and Setters for all fields
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private List<Chapter> chapters;
 
     public String getTitle() {
         return title;
@@ -68,21 +57,5 @@ public class MangaDTO {
 
     public void setChapters(List<Chapter> chapters) {
         this.chapters = chapters;
-    }
-
-    public String getGenreName() {
-        return genreName;
-    }
-
-    public void setGenreName(String genreName) {
-        this.genreName = genreName;
-    }
-
-    public float getAverageRating() {
-        return averageRating;
-    }
-
-    public void setAverageRating(float averageRating) {
-        this.averageRating = averageRating;
     }
 }
