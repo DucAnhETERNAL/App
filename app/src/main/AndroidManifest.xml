@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,6 +16,18 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ReadingLmao" />
+        <activity
+            android:name=".ui.fragment.LoginRegisterActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ReadingLmao" />
+        <activity
+            android:name=".ui.AdminActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ReadingLmao" />
+        <activity
+            android:name=".ui.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
