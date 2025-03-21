@@ -19,6 +19,18 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ReadingLmao" />
+        <activity
+            android:name=".ui.fragment.LoginRegisterActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ReadingLmao" />
+        <activity
+            android:name=".ui.AdminActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ReadingLmao" />
+        <activity
+            android:name=".ui.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
