@@ -2,71 +2,66 @@ package com.example.readinglmao.ui;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
 
 import com.example.readinglmao.R;
-import com.example.readinglmao.adapter.MangaAdapter;
-import com.example.readinglmao.model.MangaDTO;
-import com.example.readinglmao.service.ApiService;
-import com.example.readinglmao.service.RetrofitClient;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.readinglmao.ui.fragment.HomeFragment;
+import com.example.readinglmao.ui.fragment.ProfileFragment;
+import com.example.readinglmao.ui.fragment.SearchFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private MangaAdapter mangaAdapter;
-    private List<MangaDTO> mangaList;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize the manga list and RecyclerView
-        mangaList = new ArrayList<>();
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        // Set the adapter with context
-        mangaAdapter = new MangaAdapter(this, mangaList); // Pass context (this) to the adapter
-        recyclerView.setAdapter(mangaAdapter);
+        // Set the default fragment to HomeFragment
+        if (savedInstanceState == null) {
+            loadFragment(new HomeFragment());
+        }
 
-        // Fetch data from the API
-        fetchMangas();
-    }
-
-    // Method to fetch manga data from the API
-    private void fetchMangas() {
-        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
-        apiService.getMangas().enqueue(new Callback<List<MangaDTO>>() {
+        // Handle item selection from the bottom navigation view
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
-            public void onResponse(Call<List<MangaDTO>> call, Response<List<MangaDTO>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    // Clear the existing list and add the new active manga data
-                    mangaList.clear();
-                    mangaList.addAll(response.body());
-                    // Notify the adapter to refresh the data
-                    mangaAdapter.notifyDataSetChanged();
-                } else {
-                    // Handle error
-                    Log.e("MainActivity", "API Response error: " + response.message());
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment selectedFragment = null;
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.item_home) {
+                    selectedFragment = new HomeFragment();
+                    Log.d("MainActivity", "HomeFragment selected");
+                } else if (itemId == R.id.item_search) {
+                    selectedFragment = new SearchFragment();
+                    Log.d("MainActivity", "SearchFragment selected");
+                } else if (itemId == R.id.item_profile) {
+                    selectedFragment = new ProfileFragment();
+                    Log.d("MainActivity", "ProfileFragment selected");
                 }
-            }
 
-            @Override
-            public void onFailure(Call<List<MangaDTO>> call, Throwable t) {
-                // Handle failure
-                Log.e("MainActivity", "API request failed: " + t.getMessage());
+                return loadFragment(selectedFragment);
             }
         });
     }
 
+    // Method to replace fragments dynamically
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, fragment)  // Replace the fragment container with the selected fragment
+                    .commit();
+            return true;
+        }
+        return false;
+    }
 }
