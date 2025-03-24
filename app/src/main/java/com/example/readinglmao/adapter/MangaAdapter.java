@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.readinglmao.R;
 import com.example.readinglmao.model.MangaDTO;
 import com.example.readinglmao.ui.MangaDetailsActivity;
-import com.example.readinglmao.model.MangaDetailsDTO;
+
 import java.util.List;
 
 public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MangaViewHolder> {
@@ -40,19 +40,27 @@ public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MangaViewHol
             // Create an Intent to start MangaDetailsActivity
             Intent intent = new Intent(context, MangaDetailsActivity.class);
 
-            // Pass only the mangaId to MangaDetailsActivity
+            // Pass the mangaId to MangaDetailsActivity
             intent.putExtra("mangaId", manga.getId()); // Pass the mangaId
 
-            context.startActivity(intent); // Start the activity
+            // Check if chapters list is not null and not empty
+            if (manga.getChapters() != null && !manga.getChapters().isEmpty()) {
+                // Use the first chapter's ID
+                int chapterId = manga.getChapters().get(0).getId();
+                intent.putExtra("chapterId", chapterId);  // Pass the chapterId (optional)
+            }
+
+            // Start the activity
+            context.startActivity(intent);
         });
     }
-
 
     @Override
     public int getItemCount() {
         return mangaList.size();
     }
 
+    // Update the manga list with new data
     public void updateMangaList(List<MangaDTO> newMangas) {
         mangaList.clear();
         mangaList.addAll(newMangas);
