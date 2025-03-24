@@ -2,6 +2,7 @@
 package com.example.readinglmao.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.readinglmao.R;
+import com.example.readinglmao.ReadingActivity;
 import com.example.readinglmao.model.Chapter;
 import java.util.List;
 
@@ -33,6 +35,16 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterV
         Log.d("ChapterAdapter", "Binding chapter: " + chapter.getName());  // Log the chapter name
         holder.tvChapterName.setText(chapter.getName());
         holder.tvViewCount.setText("Views: " + chapter.getViewCount());
+        holder.itemView.setOnClickListener(v -> {
+            // Create an Intent to start ReadingActivity
+            Intent intent = new Intent(context, ReadingActivity.class);
+
+            // Pass the chapterId to ReadingActivity
+            intent.putExtra("chapterId", chapter.getId());
+
+            // Start ReadingActivity
+            context.startActivity(intent);
+        });
     }
 
 

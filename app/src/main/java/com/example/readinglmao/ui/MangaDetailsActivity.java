@@ -48,10 +48,16 @@ public class MangaDetailsActivity extends AppCompatActivity {
         recyclerViewChapters.setAdapter(chapterAdapter);
 
         // Receive mangaId from Intent
-        int mangaId = getIntent().getIntExtra("mangaId", -1); // Get mangaId passed from the previous screen
+        int mangaId = getIntent().getIntExtra("mangaId", -1);
+        int chapterId = getIntent().getIntExtra("chapterId", -1); // Get mangaId passed from the previous screen
         Log.d("MangaDetailsActivity", "Received mangaId: " + mangaId);
-
+        Log.d("MangaDetailsActivity", "Received chapterId: " + chapterId);
         // Fetch manga details and chapters if mangaId is valid
+        if (mangaId != -1) {
+            fetchMangaDetails(mangaId);
+        } else {
+            Log.e("MangaDetailsActivity", "No mangaId passed!");
+        }
         if (mangaId != -1) {
             fetchMangaDetails(mangaId);
         } else {

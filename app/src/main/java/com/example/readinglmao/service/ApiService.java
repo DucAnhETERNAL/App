@@ -1,6 +1,7 @@
 package com.example.readinglmao.service;
 
 import com.example.readinglmao.model.AddMangaRequestDTO;
+import com.example.readinglmao.model.ChapterText;
 import com.example.readinglmao.model.LoginRequest;
 import com.example.readinglmao.model.LoginResponse;
 import com.example.readinglmao.model.MangaDTO;
@@ -25,6 +26,9 @@ public interface ApiService {
     Call<List<MangaDTO>> getMangas();
     @GET("api/manga") // Endpoint API bạn muốn gọi
     Call<List<MangaListDTO>> getAllManga();
+    @GET("api/ChapterText/{id}")
+    Call<ChapterText> getChapterContent(@Path("id") int id);
+
     @POST("api/Register/register")  // Endpoint đăng ký
     Call<RegisterResponse> register(@Body RegisterRequest request);
     @GET("api/manga/{id}") // Endpoint lấy manga theo ID mà không cần userId
