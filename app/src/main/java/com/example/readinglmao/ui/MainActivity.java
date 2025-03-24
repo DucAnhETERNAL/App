@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<MangaDTO>> call, Response<List<MangaDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // Clear the existing list and add the new manga data
+                    // Clear the existing list and add the new active manga data
                     mangaList.clear();
                     mangaList.addAll(response.body());
                     // Notify the adapter to refresh the data
@@ -68,4 +68,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

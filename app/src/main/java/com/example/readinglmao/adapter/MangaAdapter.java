@@ -35,23 +35,18 @@ public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MangaViewHol
         holder.genreName.setText(manga.getGenreName());
         holder.averageRating.setText(String.valueOf(manga.getAverageRating()));
 
-        // Chuyển MangaDTO thành MangaDetailsDTO
-        MangaDetailsDTO mangaDetails = new MangaDetailsDTO();
-        mangaDetails.setTitle(manga.getTitle());
-        mangaDetails.setDescription(manga.getDescription());
-        mangaDetails.setAuthor(manga.getAuthor());
-        mangaDetails.setType(manga.getType());
-        mangaDetails.setStatus(manga.getStatus());
-        mangaDetails.setChapters(manga.getChapters());
-
         // Set a click listener on the item view
         holder.itemView.setOnClickListener(v -> {
             // Create an Intent to start MangaDetailsActivity
             Intent intent = new Intent(context, MangaDetailsActivity.class);
-            intent.putExtra("mangaDetails", mangaDetails); // Truyền MangaDetailsDTO
-            context.startActivity(intent);
+
+            // Pass only the mangaId to MangaDetailsActivity
+            intent.putExtra("mangaId", manga.getId()); // Pass the mangaId
+
+            context.startActivity(intent); // Start the activity
         });
     }
+
 
     @Override
     public int getItemCount() {

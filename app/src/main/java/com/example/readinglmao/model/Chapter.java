@@ -1,49 +1,31 @@
 package com.example.readinglmao.model;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class Chapter {
+public class Chapter implements Serializable {
     private int id;
-    private int mangaId;
     private String name;
     private boolean status; // true: công khai, false: ẩn
     private int viewCount;
-    private Date createdAt;
 
+    // Constructors
     public Chapter() {
     }
 
-    public Chapter(int id, int mangaId, String name, boolean status, int viewCount, Date createdAt) {
+    public Chapter(int id, String name, boolean status, int viewCount) {
         this.id = id;
-        this.mangaId = mangaId;
         this.name = name;
         this.status = status;
         this.viewCount = viewCount;
-        this.createdAt = createdAt;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    // Getters and setters
+    public int getId() {
+        return id;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public int getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(int viewCount) {
-        this.viewCount = viewCount;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -54,31 +36,29 @@ public class Chapter {
         this.name = name;
     }
 
-    public int getMangaId() {
-        return mangaId;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setMangaId(int mangaId) {
-        this.mangaId = mangaId;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
-    public int getId() {
-        return id;
+    public int getViewCount() {
+        return viewCount;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
     }
 
     @Override
     public String toString() {
         return "Chapter{" +
                 "id=" + id +
-                ", mangaId=" + mangaId +
                 ", name='" + name + '\'' +
                 ", status=" + status +
                 ", viewCount=" + viewCount +
-                ", createdAt=" + createdAt +
                 '}';
     }
 }
