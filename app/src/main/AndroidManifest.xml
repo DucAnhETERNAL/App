@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.readinglmao"
-    xmlns:tools="http://schemas.android.com/tools">
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.readinglmao">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -15,7 +15,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ReadingLmao"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.AdminListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ManageChapterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.AddMangaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ui.AddMangaActivity"
+            android:exported="false" />
         <activity android:name=".ui.MangaDetailsActivity">
+
             <!-- Add any intent-filter if necessary -->
         </activity>
         <activity
