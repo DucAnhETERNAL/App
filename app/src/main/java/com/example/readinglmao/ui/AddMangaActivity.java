@@ -2,48 +2,21 @@ package com.example.readinglmao.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import com.example.readinglmao.R;
-
-
-import com.example.readinglmao.adapter.MangaAdapter;
-import com.example.readinglmao.model.MangaDTO;
-import com.example.readinglmao.service.ApiService;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.snackbar.Snackbar;
+import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toolbar;
-
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.readinglmao.databinding.ActivityAdminBinding;
 
 import com.example.readinglmao.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.List;
+public class AddMangaActivity extends AppCompatActivity {
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class AdminActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

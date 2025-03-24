@@ -1,9 +1,11 @@
 package com.example.readinglmao.service;
 
+import com.example.readinglmao.model.AddMangaRequestDTO;
 import com.example.readinglmao.model.LoginRequest;
 import com.example.readinglmao.model.LoginResponse;
 import com.example.readinglmao.model.MangaDTO;
 import com.example.readinglmao.model.MangaDetailsDTO;
+import com.example.readinglmao.model.MangaListDTO;
 import com.example.readinglmao.model.RegisterRequest;
 import com.example.readinglmao.model.RegisterResponse;
 import com.example.readinglmao.model.User;
@@ -21,6 +23,8 @@ import retrofit2.http.Query;
 public interface ApiService {
     @GET("api/manga/active") // Endpoint API bạn muốn gọi
     Call<List<MangaDTO>> getMangas();
+    @GET("api/manga") // Endpoint API bạn muốn gọi
+    Call<List<MangaListDTO>> getAllManga();
     @POST("api/Register/register")  // Endpoint đăng ký
     Call<RegisterResponse> register(@Body RegisterRequest request);
     @GET("api/manga/{id}") // Endpoint lấy manga theo ID mà không cần userId
@@ -28,4 +32,10 @@ public interface ApiService {
 
     @POST("api/Login/login")  // Endpoint đăng nhập
     Call<LoginResponse> login(@Body LoginRequest request);
+
+    @POST("api/Manga")
+    Call<MangaDTO> addManga(@Body AddMangaRequestDTO mangaRequest);
+
+
+
 }
