@@ -2,6 +2,7 @@ package com.example.readinglmao.service;
 
 import com.example.readinglmao.model.AddMangaRequestDTO;
 import com.example.readinglmao.model.ChapterText;
+import com.example.readinglmao.model.CommentRequest;
 import com.example.readinglmao.model.LoginRequest;
 import com.example.readinglmao.model.LoginResponse;
 import com.example.readinglmao.model.MangaDTO;
@@ -36,7 +37,8 @@ public interface ApiService {
 
     @POST("api/Login/login")  // Endpoint đăng nhập
     Call<LoginResponse> login(@Body LoginRequest request);
-
+    @POST("api/Comment/add")
+    Call<Void> addComment(@Body CommentRequest commentRequest);
     @POST("api/Manga")
     Call<MangaDTO> addManga(@Body AddMangaRequestDTO mangaRequest);
 

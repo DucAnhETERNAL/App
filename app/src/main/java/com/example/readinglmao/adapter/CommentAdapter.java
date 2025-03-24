@@ -37,6 +37,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         return commentList.size();
     }
 
+    public void addComment(Comment comment) {
+        commentList.add(0, comment); // Add the comment to the beginning of the list
+        notifyItemInserted(0); // Notify RecyclerView that a new item has been inserted at position 0
+    }
+
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
         TextView tvUserName, tvComment;
 
@@ -47,3 +52,4 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         }
     }
 }
+

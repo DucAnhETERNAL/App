@@ -32,7 +32,24 @@
         android:textSize="18sp"
         android:layout_marginTop="16dp"
         android:textStyle="bold"/>
+    <EditText
+        android:id="@+id/etComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Write your comment here"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:background="@android:drawable/edit_text"
+        android:inputType="textMultiLine"
+        android:minLines="3"/>
 
+    <Button
+        android:id="@+id/btnSendComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Comment"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"/>
     <!-- RecyclerView for displaying comments -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewComments"

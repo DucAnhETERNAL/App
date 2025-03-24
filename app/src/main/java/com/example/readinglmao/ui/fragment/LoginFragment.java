@@ -1,6 +1,8 @@
 package com.example.readinglmao.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -73,7 +75,17 @@ public class LoginFragment extends Fragment {
                 }
 
                 String role = userDTO.getRole();
+                int userId = userDTO.getId();
+                String userName = userDTO.getUserName();
                 Log.d("LOGIN_DEBUG", "User Role: " + role);
+
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("userId", userId);
+                editor.putString("username", userName);
+                editor.apply();
+
+
 
                 getActivity().runOnUiThread(() -> {
                     Toast.makeText(getContext(), "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();

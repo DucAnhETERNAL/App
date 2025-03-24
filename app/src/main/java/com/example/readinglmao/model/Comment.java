@@ -18,17 +18,27 @@ public class Comment {
 
     @SerializedName("content")
     private String content;
+    private String createdAt;
 
     // Default constructor
     public Comment() {}
 
     // Full constructor
-    public Comment(int id, int chapterId, int userId, String userName, String content) {
+    public Comment(int id, int chapterId, int userId, String userName, String content, String createat) {
         this.id = id;
         this.chapterId = chapterId;
         this.userId = userId;
         this.userName = userName;  // Initialize userName
         this.content = content;
+        this.createdAt = createat;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     // Getter and Setter methods
