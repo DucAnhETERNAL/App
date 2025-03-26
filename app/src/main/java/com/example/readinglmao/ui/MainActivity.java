@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.readinglmao.R;
+import com.example.readinglmao.ui.fragment.FavoriteFragment;
 import com.example.readinglmao.ui.fragment.HomeFragment;
-import com.example.readinglmao.ui.fragment.ProfileFragment;
 import com.example.readinglmao.ui.fragment.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
                 } else if (itemId == R.id.item_search) {
                     selectedFragment = new SearchFragment();
                     Log.d("MainActivity", "SearchFragment selected");
-                } else if (itemId == R.id.item_profile) {
-                    selectedFragment = new ProfileFragment();
+                } else if (itemId == R.id.item_favorite) {
+                    selectedFragment = new FavoriteFragment();
                     Log.d("MainActivity", "ProfileFragment selected");
                 }
 

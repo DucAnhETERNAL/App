@@ -11,6 +11,7 @@ import com.example.readinglmao.R;
 import com.example.readinglmao.model.MangaDTO;
 import com.example.readinglmao.ui.MangaDetailsActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MangaViewHolder> {
@@ -19,7 +20,7 @@ public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MangaViewHol
 
     public MangaAdapter(Context context, List<MangaDTO> mangaList) {
         this.context = context;
-        this.mangaList = mangaList;
+        this.mangaList = (mangaList != null) ? mangaList : new ArrayList<>();
     }
 
     @Override
@@ -57,6 +58,10 @@ public class MangaAdapter extends RecyclerView.Adapter<MangaAdapter.MangaViewHol
 
     @Override
     public int getItemCount() {
+        if (mangaList == null) {
+            return 0;
+        }
+
         return mangaList.size();
     }
 

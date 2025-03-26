@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.SearchFragment">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#f5f5f5">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Title for Search Fields -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search by Title"
+        android:textSize="16sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="8dp"/>
 
-</FrameLayout>
+    <!-- Title Search Bar with hint text -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Enter Manga Title"
+        android:iconifiedByDefault="false"
+        android:padding="8dp"
+        android:layout_marginBottom="12dp"
+        android:queryBackground="@drawable/search_background"
+        android:backgroundTint="@android:color/white"/>
+
+    <!-- Title for Genre Search -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search by Genre"
+        android:textSize="16sp"
+        android:textColor="#333333"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Genre Search Bar with hint text -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchGenre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Enter Manga Genre"
+        android:iconifiedByDefault="false"
+        android:padding="8dp"
+        android:layout_marginBottom="16dp"
+        android:queryBackground="@drawable/search_background"
+        android:backgroundTint="@android:color/white"/>
+
+    <!-- RecyclerView to display search results -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewResults"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:layout_marginTop="12dp"/>
+
+</LinearLayout>

@@ -7,7 +7,9 @@ import com.example.readinglmao.model.LoginRequest;
 import com.example.readinglmao.model.LoginResponse;
 import com.example.readinglmao.model.MangaDTO;
 import com.example.readinglmao.model.MangaDetailsDTO;
+import com.example.readinglmao.model.MangaFavoriteDTO;
 import com.example.readinglmao.model.MangaListDTO;
+import com.example.readinglmao.model.MangaListFavoriteDTO;
 import com.example.readinglmao.model.RegisterRequest;
 import com.example.readinglmao.model.RegisterResponse;
 import com.example.readinglmao.model.User;
@@ -17,12 +19,18 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
+
+
+    @GET("api/manga")
+    Call<List<MangaDTO>> getMangasByCombinedFilter(@Query("$filter") String combinedFilter);
+
     @GET("api/manga/active") // Endpoint API bạn muốn gọi
     Call<List<MangaDTO>> getMangas();
     @GET("api/manga") // Endpoint API bạn muốn gọi
@@ -41,6 +49,12 @@ public interface ApiService {
     Call<Void> addComment(@Body CommentRequest commentRequest);
     @POST("api/Manga")
     Call<MangaDTO> addManga(@Body AddMangaRequestDTO mangaRequest);
+    @POST("api/PersonalList/add")
+    Call<Void> addToFavorites(@Body MangaFavoriteDTO manga);
+    @GET("api/PersonalList/{userId}")
+    Call<List<MangaListFavoriteDTO>> getUserFavorites(@Path("userId") int userId);
+    @DELETE("api/PersonalList/remove/{userMangaListId}")
+    Call<Void> removeFromFavorites(@Path("userMangaListId") int userMangaListId);
 
 
 
