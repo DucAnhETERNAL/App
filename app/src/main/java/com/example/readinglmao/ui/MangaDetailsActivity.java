@@ -61,8 +61,6 @@ public class MangaDetailsActivity extends AppCompatActivity {
         // Receive mangaId from Intent
         mangaId = getIntent().getIntExtra("mangaId", -1);
         int chapterId = getIntent().getIntExtra("chapterId", -1); // Get mangaId passed from the previous screen
-        Log.d("MangaDetailsActivity", "Received mangaId: " + mangaId);
-        Log.d("MangaDetailsActivity", "Received chapterId: " + chapterId);
         // Fetch manga details and chapters if mangaId is valid
         if (mangaId != -1) {
             fetchMangaDetails(mangaId);

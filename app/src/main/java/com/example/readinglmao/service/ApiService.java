@@ -1,6 +1,8 @@
 package com.example.readinglmao.service;
 
 import com.example.readinglmao.model.AddMangaRequestDTO;
+import com.example.readinglmao.model.AdminMangaDetailsDTO;
+import com.example.readinglmao.model.Chapter;
 import com.example.readinglmao.model.ChapterText;
 import com.example.readinglmao.model.CommentRequest;
 import com.example.readinglmao.model.LoginRequest;
@@ -8,6 +10,7 @@ import com.example.readinglmao.model.LoginResponse;
 import com.example.readinglmao.model.MangaDTO;
 import com.example.readinglmao.model.MangaDetailsDTO;
 import com.example.readinglmao.model.MangaFavoriteDTO;
+import com.example.readinglmao.model.MangaEditDTO;
 import com.example.readinglmao.model.MangaListDTO;
 import com.example.readinglmao.model.MangaListFavoriteDTO;
 import com.example.readinglmao.model.RegisterRequest;
@@ -22,6 +25,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -43,6 +47,16 @@ public interface ApiService {
     @GET("api/manga/{id}") // Endpoint lấy manga theo ID mà không cần userId
     Call<MangaDetailsDTO> getMangaDetails(@Path("id") int id);
 
+    @GET("api/manga/{id}") // Endpoint lấy manga theo ID mà không cần userId
+    Call<AdminMangaDetailsDTO> getAdminMangaDetails(@Path("id") int id);
+
+    @GET("api/manga/{id}")
+    Call<MangaListDTO> getAdminChapterDetails(@Path("id") int id);
+
+    @PUT("api/Manga/{id}")
+    Call<MangaEditDTO> updateManga(@Path("id") int id, @Body MangaEditDTO mangaEditDTO);
+
+
     @POST("api/Login/login")  // Endpoint đăng nhập
     Call<LoginResponse> login(@Body LoginRequest request);
     @POST("api/Comment/add")
@@ -55,7 +69,6 @@ public interface ApiService {
     Call<List<MangaListFavoriteDTO>> getUserFavorites(@Path("userId") int userId);
     @DELETE("api/PersonalList/remove/{userMangaListId}")
     Call<Void> removeFromFavorites(@Path("userMangaListId") int userMangaListId);
-
 
 
 }

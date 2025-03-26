@@ -3,6 +3,7 @@ package com.example.readinglmao.ui.fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,20 +12,22 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.readinglmao.R;
+import com.example.readinglmao.adapter.ChapterTextAdapter;
+import com.example.readinglmao.adapter.CommentAdapter;
 import com.example.readinglmao.model.ChapterText;
 import com.example.readinglmao.model.Comment;
 import com.example.readinglmao.model.CommentRequest;
 import com.example.readinglmao.service.ApiService;
 import com.example.readinglmao.service.RetrofitClient;
-import com.example.readinglmao.adapter.CommentAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,57 +35,53 @@ import java.util.List;
 import java.util.Locale;
 
 public class UserReadingFragment extends Fragment {
-
-    private TextView tvChapterContent, tvCommentsLabel;
-    private ProgressBar progressBar;
-    private RecyclerView recyclerViewComments;
+    private RecyclerView recyclerViewChapter, recyclerViewComments;
+    private ChapterTextAdapter chapterAdapter;
     private CommentAdapter commentAdapter;
-    private List<Comment> commentList;
+    private ProgressBar progressBar;
     private EditText etComment;
     private Button btnSendComment;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_reading, container, false);
+    private List<String> chapterParts;
+    private List<Comment> commentList;
+    private boolean isLoading = false;
+    private int chapterId;
+    private int currentPage = 0;
+    private static final int PAGE_SIZE = 500;
 
-        // Initialize views
-        tvChapterContent = view.findViewById(R.id.tvChapterContent);
-        tvCommentsLabel = view.findViewById(R.id.tvCommentsLabel);
-        progressBar = view.findViewById(R.id.progressBar);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_user_reading, container, false);
+        recyclerViewChapter = view.findViewById(R.id.recyclerViewChapter);
         recyclerViewComments = view.findViewById(R.id.recyclerViewComments);
+        progressBar = view.findViewById(R.id.progressBar);
         etComment = view.findViewById(R.id.etComment);
         btnSendComment = view.findViewById(R.id.btnSendComment);
 
-        // Set up RecyclerView for comments
+        chapterParts = new ArrayList<>();
         commentList = new ArrayList<>();
+
+        chapterAdapter = new ChapterTextAdapter(getContext(), chapterParts);
+        recyclerViewChapter.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewChapter.setAdapter(chapterAdapter);
+
         commentAdapter = new CommentAdapter(getContext(), commentList);
         recyclerViewComments.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerViewComments.setAdapter(commentAdapter);
 
-        // Get chapterId from arguments passed to the fragment
-        int chapterId = getArguments().getInt("chapterId", -1);
-
-        // Fetch chapter content and comments if chapterId is valid
+        chapterId = getArguments().getInt("chapterId", -1);
         if (chapterId != -1) {
-            fetchChapterContentAndComments(chapterId);
-        } else {
-            tvChapterContent.setText("Invalid chapter.");
+            fetchChapterContentAndComments();
         }
 
         btnSendComment.setOnClickListener(v -> {
             String commentContent = etComment.getText().toString().trim();
             if (!commentContent.isEmpty()) {
-                // Get userId from SharedPreferences
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                int userId = sharedPreferences.getInt("userId", -1); // Get userId
-
-
+                int userId = sharedPreferences.getInt("userId", -1);
                 if (userId != -1) {
-                    String createdAt = getCurrentDateTime(); // Get current datetime
-
-                    CommentRequest commentRequest = new CommentRequest(userId, chapterId, commentContent, createdAt);
-
-                    // Call the API to send the comment
-                    sendCommentToApi(commentRequest);
+                    String createdAt = getCurrentDateTime();
+                    sendCommentToApi(new CommentRequest(userId, chapterId, commentContent, createdAt));
                 } else {
                     Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
                 }
@@ -91,58 +90,40 @@ public class UserReadingFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
-    private void fetchChapterContentAndComments(int chapterId) {
-        // Show the progress bar while fetching the content
+    private void fetchChapterContentAndComments() {
         progressBar.setVisibility(View.VISIBLE);
-
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
-
-        // Fetch chapter content
         apiService.getChapterContent(chapterId).enqueue(new Callback<ChapterText>() {
             @Override
             public void onResponse(Call<ChapterText> call, Response<ChapterText> response) {
+                progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
-                    // Hide the progress bar
-                    progressBar.setVisibility(View.GONE);
-
                     ChapterText chapterText = response.body();
                     String content = chapterText.getContent();
-
-                    // Limit the content length if it exceeds a certain number of characters
-                    int maxContentLength = 1000;
-                    if (content.length() > maxContentLength) {
-                        content = content.substring(0, maxContentLength) + "...";
+                    for (int i = 0; i < content.length(); i += PAGE_SIZE) {
+                        chapterParts.add(content.substring(i, Math.min(i + PAGE_SIZE, content.length())));
                     }
-
-                    // Set chapter content
-                    tvChapterContent.setText(content);
-
-                    // Set the comments section
-                    List<Comment> comments = chapterText.getComments();
-                    if (comments != null && !comments.isEmpty()) {
-                        commentList.clear();
-                        commentList.addAll(comments);
+                    chapterAdapter.notifyDataSetChanged();
+                    if (chapterText.getComments() != null) {
+                        commentList.addAll(chapterText.getComments());
                         commentAdapter.notifyDataSetChanged();
                     }
                 } else {
-                    // Handle the case when the chapter content is not fetched successfully
-                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Failed to load chapter content.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ChapterText> call, Throwable t) {
-                // Handle failure (e.g., no internet connection)
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
+
     private void sendCommentToApi(CommentRequest commentRequest) {
         ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
         apiService.addComment(commentRequest).enqueue(new Callback<Void>() {
@@ -181,10 +162,7 @@ public class UserReadingFragment extends Fragment {
         });
     }
 
-    // Utility method to get current datetime
     private String getCurrentDateTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-        return sdf.format(new Date());
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).format(new Date());
     }
-
 }

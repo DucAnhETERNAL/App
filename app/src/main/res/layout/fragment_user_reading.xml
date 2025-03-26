@@ -13,15 +13,13 @@
         android:visibility="gone"
         android:layout_gravity="center" />
 
-    <!-- TextView for displaying the chapter content with a larger font -->
-    <TextView
-        android:id="@+id/tvChapterContent"
+    <!-- RecyclerView for displaying chapter content -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewChapter"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Chapter Content will appear here"
-        android:textSize="18sp"
-        android:lineSpacingExtra="4dp"
-        android:textColor="@android:color/black"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"/>
 
     <!-- Label for comments -->
     <TextView
@@ -32,6 +30,15 @@
         android:textSize="18sp"
         android:layout_marginTop="16dp"
         android:textStyle="bold"/>
+
+    <!-- RecyclerView for displaying comments -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewComments"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Comment input -->
     <EditText
         android:id="@+id/etComment"
         android:layout_width="match_parent"
@@ -43,6 +50,7 @@
         android:inputType="textMultiLine"
         android:minLines="3"/>
 
+    <!-- Button for sending comment -->
     <Button
         android:id="@+id/btnSendComment"
         android:layout_width="wrap_content"
@@ -50,10 +58,4 @@
         android:text="Send Comment"
         android:layout_marginTop="8dp"
         android:layout_gravity="center"/>
-    <!-- RecyclerView for displaying comments -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewComments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"/>
 </LinearLayout>
