@@ -3,6 +3,8 @@ package com.example.readinglmao.service;
 import com.example.readinglmao.model.AddMangaRequestDTO;
 import com.example.readinglmao.model.AdminMangaDetailsDTO;
 import com.example.readinglmao.model.Chapter;
+import com.example.readinglmao.model.ChapterText;
+import com.example.readinglmao.model.CommentRequest;
 import com.example.readinglmao.model.LoginRequest;
 import com.example.readinglmao.model.LoginResponse;
 import com.example.readinglmao.model.MangaDTO;

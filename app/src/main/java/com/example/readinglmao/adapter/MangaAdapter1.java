@@ -19,7 +19,7 @@ import com.example.readinglmao.ui.MangaDetailsActivity;
 
 import java.util.List;
 
-public class MangaAdapter1 extends RecyclerView.Adapter<MangaAdapter1.ViewHolder> {
+public class    MangaAdapter1 extends RecyclerView.Adapter<MangaAdapter1.ViewHolder> {
     private Context context;
     private List<MangaListDTO> mangaList;
     private String sourceActivity;
