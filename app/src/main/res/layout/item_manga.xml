@@ -4,17 +4,51 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <TextView
-        android:id="@+id/tvMangaTitle"
-        android:layout_width="wrap_content"
+    <!-- Phần hiển thị thông tin Manga -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tên Manga"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnDetail"
-        android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên Manga"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvGenre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thể loại"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đánh giá"
+                android:textSize="14sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Phần hiển thị danh sách chương -->
+    <TextView
+        android:id="@+id/tvChapters"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Detail"/>
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"/>
+
 </LinearLayout>

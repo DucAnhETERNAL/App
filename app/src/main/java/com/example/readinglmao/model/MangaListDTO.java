@@ -1,21 +1,44 @@
 package com.example.readinglmao.model;
 
+import java.util.List;
+
 public class MangaListDTO {
     private int id;
     private String title;
     private String genreName;
-    private double averageRating;
+    private float averageRating;
+    private List<ChapterListDTO> chapters;
+    private boolean isExpanded; // Trạng thái mở rộng danh sách chương
 
-    // Getter và Setter
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public String getTitle() {
+        return title;
+    }
 
-    public String getGenreName() { return genreName; }
-    public void setGenreName(String genreName) { this.genreName = genreName; }
+    public String getGenreName() {
+        return genreName;
+    }
 
-    public double getAverageRating() { return averageRating; }
-    public void setAverageRating(double averageRating) { this.averageRating = averageRating; }
+    public float getAverageRating() {
+        return averageRating;
+    }
+
+    public List<ChapterListDTO> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(List<ChapterListDTO> chapters) {
+        this.chapters = chapters;
+    }
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
+    }
 }
