@@ -16,16 +16,16 @@
         android:theme="@style/Theme.ReadingLmao"
         tools:targetApi="31">
         <activity
-            android:name=".ui.AdminListActivity"
+            android:name=".ui.AdminChapterDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.AdminMangaDetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.ManageChapterActivity"
             android:exported="false" />
         <activity
             android:name=".ui.AddMangaActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ui.AddMangaActivity"
             android:exported="false" />
         <activity android:name=".ui.MangaDetailsActivity">
 

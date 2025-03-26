@@ -57,5 +57,10 @@
     <string name="manga_title">Manga Title</string>
     <string name="genre">Genre</string>
     <string name="rating">Rating</string>
+    <string-array name="status_array">
+        <item>Active</item>
+        <item>Inactive</item>
+    </string-array>
+
 
 </resources>
