@@ -13,17 +13,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.readinglmao.R;
+import com.example.readinglmao.adapter.AdminChapterAdapter;
+import com.example.readinglmao.adapter.ChapterAdapter;
 import com.example.readinglmao.model.AdminMangaDetailsDTO;
+import com.example.readinglmao.model.Chapter;
 import com.example.readinglmao.model.MangaEditDTO;
 import com.example.readinglmao.repository.AdminMangaRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminMangaDetailActivity extends AppCompatActivity {
     private LinearLayout viewModeLayout, editModeLayout, editButtonsLayout;
     private TextView textViewTitle, textViewAuthor, textViewType, textViewStatus, textViewDescription;
     private EditText editTextTitle, editTextDescription;
     private Button btnEdit, btnSave, btnCancel, btnBack;
+    private RecyclerView recyclerView;
+    private AdminChapterAdapter adminChapterAdapter;
+    private List<Chapter> chapterList = new ArrayList<>();
     private Spinner spinnerStatus;
 
     private int mangaId;
@@ -41,11 +52,10 @@ public class AdminMangaDetailActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerStatus.setAdapter(adapter);
 
-
         viewModeLayout = findViewById(R.id.viewModeLayout);
         editModeLayout = findViewById(R.id.editModeLayout);
         editButtonsLayout = findViewById(R.id.editButtonsLayout);
-        // Ánh xạ view
+
         textViewTitle = findViewById(R.id.textViewTitle);
         textViewAuthor = findViewById(R.id.textViewAuthor);
         textViewType = findViewById(R.id.textViewType);
@@ -60,13 +70,17 @@ public class AdminMangaDetailActivity extends AppCompatActivity {
         btnCancel = findViewById(R.id.btnCancel);
         btnBack = findViewById(R.id.btnBack);
 
+        recyclerView = findViewById(R.id.recyclerViewChapters);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
         mangaRepository = new AdminMangaRepository();
 
-        // Lấy mangaId từ Intent
         mangaId = getIntent().getIntExtra("MANGA_ID", -1);
-        mangaRepository = new AdminMangaRepository();
+        if (mangaId != -1) {
+            fetchMangaDetail(mangaId);
 
-        fetchMangaDetail(mangaId);
+        }
 
         btnEdit.setOnClickListener(view -> enableEditMode(true));
         btnCancel.setOnClickListener(view -> enableEditMode(false));
@@ -74,7 +88,7 @@ public class AdminMangaDetailActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> {
             Intent intent = new Intent(this, AdminActivity.class);
             startActivity(intent);
-            finish(); // Đóng Activity hiện tại
+            finish();
         });
     }
 
@@ -121,7 +135,6 @@ public class AdminMangaDetailActivity extends AppCompatActivity {
         }
     }
 
-
     private void updateMangaDetail() {
         String title = editTextTitle.getText().toString().trim();
         String status = spinnerStatus.getSelectedItem().toString();
@@ -140,7 +153,7 @@ public class AdminMangaDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String successMessage) {
                 showToast(successMessage);
-                fetchMangaDetail(mangaId); // Load lại dữ liệu
+                fetchMangaDetail(mangaId);
                 enableEditMode(false);
             }
 
@@ -151,6 +164,8 @@ public class AdminMangaDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

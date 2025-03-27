@@ -11,34 +11,45 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.readinglmao.R;
-import com.example.readinglmao.model.ChapterListDTO;
-import com.example.readinglmao.ui.ManageChapterActivity;
+import com.example.readinglmao.model.Chapter;
+import com.example.readinglmao.ui.ChapterAllDetailActivity;
 
 import java.util.List;
 
-public class AdminChapterAdapter extends RecyclerView.Adapter<AdminChapterAdapter.ViewHolder> {
+public class AdminChapterAdapter extends RecyclerView.Adapter<AdminChapterAdapter.ChapterViewHolder> {
+    private List<Chapter> chapterList;
     private Context context;
-    private List<ChapterListDTO> chapterList;
+    private OnItemClickListener listener;
 
-    public AdminChapterAdapter(Context context, List<ChapterListDTO> chapterList) {
-        this.context = context;
+    public interface OnItemClickListener {
+        void onItemClick(Chapter chapter);
+    }
+
+    public AdminChapterAdapter(List<Chapter> chapterList, Context context, OnItemClickListener listener) {
         this.chapterList = chapterList;
+        this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_chapter, parent, false);
-        return new ViewHolder(view);
+    public ChapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_manga_chapter, parent, false);
+        return new ChapterViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ChapterListDTO chapter = chapterList.get(position);
-        holder.chapterTitle.setText(chapter.getName());
+    public void onBindViewHolder(@NonNull ChapterViewHolder holder, int position) {
+        Chapter chapter = chapterList.get(position);
+        holder.textView.setText(chapter.getName());
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ManageChapterActivity.class);
+            if (listener != null) {
+                listener.onItemClick(chapter);
+            }
+
+            // Chuyển sang AllChapterDetailActivity và truyền ChapterId
+            Intent intent = new Intent(context, ChapterAllDetailActivity.class);
             intent.putExtra("CHAPTER_ID", chapter.getId());
             context.startActivity(intent);
         });
@@ -49,12 +60,13 @@ public class AdminChapterAdapter extends RecyclerView.Adapter<AdminChapterAdapte
         return chapterList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView chapterTitle;
+    public static class ChapterViewHolder extends RecyclerView.ViewHolder {
+        TextView textView, tvViewCount;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ChapterViewHolder(@NonNull View itemView) {
             super(itemView);
-            chapterTitle = itemView.findViewById(R.id.chapterTitle);
+            textView = itemView.findViewById(R.id.tvChapterName);
+            tvViewCount = itemView.findViewById(R.id.tvViewCount);
         }
     }
 }

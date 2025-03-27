@@ -90,6 +90,13 @@
             android:text="Description for Manga 1"
             android:textSize="16sp"
             android:padding="4dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewChapters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:visibility="visible"/>
     </LinearLayout>
 
     <!-- Chế độ chỉnh sửa (Edit Mode) -->

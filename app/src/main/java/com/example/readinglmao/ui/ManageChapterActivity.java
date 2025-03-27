@@ -3,6 +3,7 @@ package com.example.readinglmao.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.example.readinglmao.model.MangaListDTO;
 import com.example.readinglmao.service.ApiService;
 import com.example.readinglmao.service.RetrofitClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -32,6 +34,7 @@ public class ManageChapterActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MangaAdapter1 mangaAdapter;
 
+    private FloatingActionButton btnAdd;
 
 
     @Override
@@ -40,6 +43,11 @@ public class ManageChapterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manage_chapter);
 
         recyclerView = findViewById(R.id.recyclerView);
+        btnAdd = findViewById(R.id.btnAdd);
+        btnAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(ManageChapterActivity.this, AddChapterActivity.class);
+            startActivity(intent);
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         fetchMangaList();
 
