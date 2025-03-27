@@ -1,83 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="start"
-        android:paddingBottom="8dp">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        <!-- Smaller ImageButton -->
-        <ImageButton
-        android:id="@+id/addToFavoritesButton"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@drawable/ic_favorite"
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_marginEnd="16dp"
-        android:padding="4dp"
-        android:scaleType="centerInside" />
+        <!-- Ảnh bìa truyện -->
+        <ImageView
+            android:id="@+id/mangaCover"
+            android:layout_width="200dp"
+            android:layout_height="280dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="12dp"
+            tools:src="@drawable/sample_cover"/>
 
-        <!-- Manga Title TextView -->
-        <TextView
-            android:id="@+id/mangaTitle"
+        <!-- Tiêu đề + Nút yêu thích -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Manga Title"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <!-- Tiêu đề Manga -->
+            <TextView
+                android:id="@+id/mangaTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tên truyện"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:paddingEnd="8dp"
+                tools:text="One Piece"/>
+
+            <!-- Nút Yêu Thích -->
+            <ImageButton
+                android:id="@+id/addToFavoritesButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_favorite"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Add to Favorites"
+                android:scaleType="fitCenter"
+                android:padding="4dp"
+                app:tint="#FF0000" />
+
+        </LinearLayout>
+
+        <!-- Thông tin truyện -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:background="@color/white"
+            android:elevation="2dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📖 Description:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/mangaDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="..."
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                tools:text="A great adventure story!"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✍️ Author:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/mangaAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="..."
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                tools:text="Eiichiro Oda"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📂 Type:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/mangaType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="..."
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                tools:text="Shounen"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🔵 Status:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/mangaStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="..."
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                tools:text="Ongoing"
+                android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+
+        <!-- Danh sách chương -->
+        <TextView
+            android:id="@+id/chapterList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📚 Chapters"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp"
+            tools:text="📚 Chapters"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewChapters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="8dp"/>
     </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/mangaDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp" />
-
-    <TextView
-        android:id="@+id/mangaAuthor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Author"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp" />
-
-    <TextView
-        android:id="@+id/mangaType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Type"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp" />
-
-    <TextView
-        android:id="@+id/mangaStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Status"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp" />
-
-    <TextView
-        android:id="@+id/chapterList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Chapters"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewChapters"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"/>
-
-</LinearLayout>
+</ScrollView>

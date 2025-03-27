@@ -24,12 +24,26 @@
         android:textColor="#555" />
 
     <!-- Average rating of the manga -->
-    <TextView
-        android:id="@+id/averageRating"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rating: 0.0"
-        android:textSize="12sp"
-        android:textColor="#888" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/averageRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rating: 0.0"
+            android:textSize="12sp"
+            android:textColor="#888" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/star_rate"
+            android:layout_marginStart="5dp" />
+    </LinearLayout>
+
 
 </LinearLayout>
