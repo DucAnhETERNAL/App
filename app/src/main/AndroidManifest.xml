@@ -19,6 +19,15 @@
         <activity android:name=".ReadingActivity"
             android:exported="false"/>
         <activity
+            android:name=".ui.UpdateChapterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ChapterAllDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.AddChapterActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.AdminChapterDetailActivity"
             android:exported="false" />
         <activity

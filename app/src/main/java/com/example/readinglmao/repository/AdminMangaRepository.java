@@ -4,10 +4,13 @@ import android.util.Log;
 
 import com.example.readinglmao.model.AddMangaRequestDTO;
 import com.example.readinglmao.model.AdminMangaDetailsDTO;
+import com.example.readinglmao.model.Chapter;
 import com.example.readinglmao.model.MangaDTO;
 import com.example.readinglmao.model.MangaEditDTO;
 import com.example.readinglmao.service.ApiService;
 import com.example.readinglmao.service.RetrofitClient;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,6 +82,31 @@ public class AdminMangaRepository {
             }
         });
     }
+
+    public void fetchChapters(int mangaId, final ChaptersCallback callback) {
+        apiService.getChapters(mangaId).enqueue(new Callback<List<Chapter>>() {
+            @Override
+            public void onResponse(Call<List<Chapter>> call, Response<List<Chapter>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onFailure("Failed to fetch chapters.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Chapter>> call, Throwable t) {
+                callback.onFailure("Network error: " + t.getMessage());
+            }
+        });
+    }
+
+    public interface ChaptersCallback {
+        void onSuccess(List<Chapter> chapters);
+        void onFailure(String errorMessage);
+    }
+
+
 
 
     public interface MangaDetailCallback {

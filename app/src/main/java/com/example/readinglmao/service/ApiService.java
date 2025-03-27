@@ -3,8 +3,13 @@ package com.example.readinglmao.service;
 import com.example.readinglmao.model.AddMangaRequestDTO;
 import com.example.readinglmao.model.AdminMangaDetailsDTO;
 import com.example.readinglmao.model.Chapter;
-import com.example.readinglmao.model.ChapterText;
+
 import com.example.readinglmao.model.CommentRequest;
+import com.example.readinglmao.model.ChapterEditDTO;
+import com.example.readinglmao.model.ChapterListDTO;
+import com.example.readinglmao.model.ChapterRequest;
+import com.example.readinglmao.model.ChapterResponse;
+import com.example.readinglmao.model.ChapterText;
 import com.example.readinglmao.model.LoginRequest;
 import com.example.readinglmao.model.LoginResponse;
 import com.example.readinglmao.model.MangaDTO;
@@ -56,6 +61,8 @@ public interface ApiService {
     @PUT("api/Manga/{id}")
     Call<MangaEditDTO> updateManga(@Path("id") int id, @Body MangaEditDTO mangaEditDTO);
 
+    @PUT("api/chapter/{id}")
+    Call<ChapterEditDTO> updateChapter(@Path("id") int id, @Body ChapterEditDTO chapterEditDTO);
 
     @POST("api/Login/login")  // Endpoint đăng nhập
     Call<LoginResponse> login(@Body LoginRequest request);
@@ -69,6 +76,18 @@ public interface ApiService {
     Call<List<MangaListFavoriteDTO>> getUserFavorites(@Path("userId") int userId);
     @DELETE("api/PersonalList/remove/{userMangaListId}")
     Call<Void> removeFromFavorites(@Path("userMangaListId") int userMangaListId);
+
+    @GET("api/manga/{id}")
+    Call<List<Chapter>> getChapters(@Path("id") int mangaId);
+
+    @POST("api/chapter")
+    Call<ChapterResponse> addChapter(@Body ChapterRequest chapterRequest);
+
+    @GET("api/chapter/{id}")
+    Call<Chapter> getChapterById(@Path("id") int chapterId);
+
+    @GET("api/ChapterText/{chapterId}")
+    Call<ChapterText> getChapterTextById(@Path("chapterId") int chapterId);
 
 
 }
