@@ -76,8 +76,8 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchMangas() {
-        String titleQuery = searchTitle.getQuery().toString().trim();
-        String genreQuery = searchGenre.getQuery().toString().trim();
+        String titleQuery = searchTitle.getQuery().toString().trim().toLowerCase();
+        String genreQuery = searchGenre.getQuery().toString().trim().toLowerCase();
 
         if (TextUtils.isEmpty(titleQuery) && TextUtils.isEmpty(genreQuery)) {
             Toast.makeText(getContext(), "Please enter a search query", Toast.LENGTH_SHORT).show();
@@ -88,7 +88,7 @@ public class SearchFragment extends Fragment {
         String filterQuery = "";
 
         if (!TextUtils.isEmpty(titleQuery)) {
-            filterQuery += "contains(title, '" + titleQuery + "')";
+            filterQuery += "contains(toLower(title), '" + titleQuery + "')";
         }
 
         if (!TextUtils.isEmpty(genreQuery)) {

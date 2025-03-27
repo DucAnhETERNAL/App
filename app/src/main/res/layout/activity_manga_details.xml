@@ -20,7 +20,7 @@
             android:layout_height="280dp"
             android:scaleType="centerCrop"
             android:layout_marginBottom="12dp"
-            tools:src="@drawable/sample_cover"/>
+            tools:src="@drawable/ic_sung"/>
 
         <!-- Tiêu đề + Nút yêu thích -->
         <LinearLayout
