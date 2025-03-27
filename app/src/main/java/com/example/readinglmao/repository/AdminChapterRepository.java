@@ -1,6 +1,7 @@
 package com.example.readinglmao.repository;
 
 import com.example.readinglmao.model.Chapter;
+import com.example.readinglmao.model.ChapterEditDTO;
 import com.example.readinglmao.model.ChapterRequest;
 import com.example.readinglmao.model.ChapterResponse;
 import com.example.readinglmao.model.ChapterText;
@@ -82,6 +83,26 @@ public class AdminChapterRepository {
             }
         });
     }
+
+    public void updateChapter(int chapterId, ChapterEditDTO updatedChapter, RepositoryCallback<ChapterEditDTO> callback) {
+        apiService.updateChapter(chapterId, updatedChapter).enqueue(new Callback<ChapterEditDTO>() {
+            @Override
+            public void onResponse(Call<ChapterEditDTO> call, Response<ChapterEditDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onSuccess(response.body());
+                } else {
+                    callback.onError("Lỗi khi cập nhật chương: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ChapterEditDTO> call, Throwable t) {
+                callback.onError("Lỗi kết nối API: " + t.getMessage());
+            }
+        });
+    }
+
+
 
 
     // Giao diện callback để xử lý kết quả API

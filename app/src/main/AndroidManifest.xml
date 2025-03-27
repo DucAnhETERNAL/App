@@ -16,6 +16,9 @@
         android:theme="@style/Theme.ReadingLmao"
         tools:targetApi="31">
         <activity
+            android:name=".ui.UpdateChapterActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.ChapterAllDetailActivity"
             android:exported="false" />
         <activity

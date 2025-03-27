@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.readinglmao.R;
+import com.example.readinglmao.adapter.AdminChapterAdapter;
 import com.example.readinglmao.adapter.ChapterAdapter;
 import com.example.readinglmao.model.Chapter;
 import com.example.readinglmao.model.MangaDetailsDTO;
@@ -32,7 +33,8 @@ public class AdminChapterDetailActivity extends AppCompatActivity {
 
     private TextView mangaTitle;
     private RecyclerView recyclerViewChapters;
-    private ChapterAdapter chapterAdapter;
+
+    private AdminChapterAdapter adminChapterAdapter;
     private List<Chapter> chapterList;
     private Button btnBack;
 
@@ -49,9 +51,9 @@ public class AdminChapterDetailActivity extends AppCompatActivity {
 
         // Initialize chapter list and adapter
         chapterList = new ArrayList<>();
-        chapterAdapter = new ChapterAdapter(this, chapterList);
         recyclerViewChapters.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewChapters.setAdapter(chapterAdapter);
+        adminChapterAdapter = new AdminChapterAdapter(chapterList,this);
+        recyclerViewChapters.setAdapter(adminChapterAdapter);
 
         btnBack.setOnClickListener(v -> finish()); // Kết thúc Activity, quay lại màn hình trước đó
 
@@ -92,7 +94,7 @@ public class AdminChapterDetailActivity extends AppCompatActivity {
                     if (mangaDetails.getChapters() != null && !mangaDetails.getChapters().isEmpty()) {
                         chapterList.clear();
                         chapterList.addAll(mangaDetails.getChapters());
-                        chapterAdapter.notifyDataSetChanged();
+                        adminChapterAdapter.notifyDataSetChanged();
                     } else {
                         Log.e("MangaDetailsActivity", "No chapters available.");
                     }

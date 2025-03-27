@@ -2,6 +2,7 @@ package com.example.readinglmao.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +20,12 @@ import java.util.List;
 public class AdminChapterAdapter extends RecyclerView.Adapter<AdminChapterAdapter.ChapterViewHolder> {
     private List<Chapter> chapterList;
     private Context context;
-    private OnItemClickListener listener;
 
-    public interface OnItemClickListener {
-        void onItemClick(Chapter chapter);
-    }
 
-    public AdminChapterAdapter(List<Chapter> chapterList, Context context, OnItemClickListener listener) {
+    public AdminChapterAdapter(List<Chapter> chapterList, Context context) {
         this.chapterList = chapterList;
         this.context = context;
-        this.listener = listener;
+
     }
 
     @NonNull
@@ -44,9 +41,8 @@ public class AdminChapterAdapter extends RecyclerView.Adapter<AdminChapterAdapte
         holder.textView.setText(chapter.getName());
 
         holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onItemClick(chapter);
-            }
+            Log.d("ChapterClick", "Clicked on Chapter ID: " + chapter.getId());
+
 
             // Chuyển sang AllChapterDetailActivity và truyền ChapterId
             Intent intent = new Intent(context, ChapterAllDetailActivity.class);
